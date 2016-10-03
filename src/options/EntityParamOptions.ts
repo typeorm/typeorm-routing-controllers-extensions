@@ -28,6 +28,7 @@ export interface EntityParamOptions {
 
     /**
      * Indicates if it should transform to an array of entities.
+     * To make it work you need to specify many: true + specify type of entity
      */
     many?: boolean;
 

@@ -3,7 +3,6 @@ import {defaultMetadataArgsStorage} from "routing-controllers";
 import {getConnectionManager} from "typeorm";
 import {plainToClass} from "class-transformer";
 import {ParamTypes} from "routing-controllers/metadata/types/ParamTypes";
-import {EntityMetadataCollection} from "typeorm/metadata-args/collection/EntityMetadataCollection";
 
 /**
  * Creates entity from the request body.
@@ -35,15 +34,12 @@ export function EntityFromBody(options?: EntityParamOptions) {
 
                     const map: any = { target: target, properties: {} };
                     maps.push(map);
-                    const entityMetadatas: EntityMetadataCollection = (connection as any).entityMetadatas;
-                    entityMetadatas.findByTarget(target)
-                        .relations
-                        .forEach(relation => {
-                            if (relation.type instanceof Function) {
-                                map.properties[relation.propertyName] = relation.type;
-                                buildMap(relation.type, maps);
-                            }
-                        });
+                    connection.getMetadata(target).relations.forEach(relation => {
+                        if (relation.type instanceof Function) {
+                            map.properties[relation.propertyName] = relation.type;
+                            buildMap(relation.type, maps);
+                        }
+                    });
                     return maps;
 
                 }

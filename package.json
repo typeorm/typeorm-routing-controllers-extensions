@@ -1,6 +1,6 @@
 {
   "name": "typeorm-routing-controllers-extensions",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "TypeORM routing-controllers integration library.",
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -44,7 +44,7 @@
     "typescript": "^2.0.3"
   },
   "peerDependencies": {
-    "typeorm": "^0.0.4",
+    "typeorm": "^0.0.5",
     "routing-controllers": "^0.6.5",
     "class-transformer": "^0.1.1"
   }

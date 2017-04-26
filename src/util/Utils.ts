@@ -4,11 +4,11 @@ import {getConnectionManager} from "typeorm";
 /**
  * @internal
  */
-export function entityTransform(value: any, target: any, options?: EntityParamOptions) {
-    const connection = getConnectionManager().get(options ? options.connectionName : undefined);
+export function entityTransform(value: any, target: any, isArray: boolean, options?: EntityParamOptions) {
+    const connection = getConnectionManager().get(options ? options.connection : undefined);
     const repository = connection.getRepository(target);
     if (options) {
-        if (options.many) {
+        if (isArray) {
             if (!options.property)
                 throw new Error("Conditional property must be set to perform a query to multiple objects.");
 

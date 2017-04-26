@@ -1,32 +1,29 @@
 import {EntityParamOptions} from "../options/EntityParamOptions";
-import {defaultMetadataArgsStorage} from "routing-controllers";
-import {getConnectionManager} from "typeorm";
+import {getConnection} from "typeorm";
 import {plainToClass} from "class-transformer";
-import {ParamTypes} from "routing-controllers/metadata/types/ParamTypes";
+import {defaultMetadataArgsStorage} from "routing-controllers/metadata-builder/MetadataArgsStorage";
 
 /**
  * Creates entity from the request body.
  */
 export function EntityFromBody(options?: EntityParamOptions) {
-    return function(object: Object, methodName: string, index: number) {
+    return function(object: Object, method: string, index: number) {
 
-        const reflectedType = (Reflect as any).getMetadata("design:paramtypes", object, methodName)[index];
+        const reflectedType = (Reflect as any).getMetadata("design:paramtypes", object, method)[index];
+        const isArray = reflectedType && reflectedType.name ? reflectedType.name.toLowerCase() === "array" : false;
         const target = options && options.type ? options.type : reflectedType;
         if (!target)
             throw new Error("Cannot guess type if the parameter");
 
-        defaultMetadataArgsStorage().params.push({
-            method: methodName,
+        defaultMetadataArgsStorage.params.push({
+            object: object,
+            method: method,
             index: index,
-            type: ParamTypes.BODY,
-            reflectedType: reflectedType,
-            parseJson: options && options.parseJson,
-            isRequired: options && options.required,
-            // format: target,
-            target: object.constructor,
+            type: "body",
+            parse: options && options.parse,
+            required: options && options.required,
             transform: (value: any) => {
-
-                const connection = getConnectionManager().get(options ? options.connectionName : undefined);
+                const connection = getConnection(options ? options.connection : undefined);
 
                 function buildMap(target: Function, maps: { target: Function, properties: any }[]) {
                     if (!!maps.find(map => map.target === target))
@@ -45,9 +42,9 @@ export function EntityFromBody(options?: EntityParamOptions) {
                 }
 
                 const maps = buildMap(target, []);
-                if (options && options.many) {
+                if (isArray)
                     return plainToClass(target, value as Object[], { targetMaps: maps });
-                }
+
                 return plainToClass(target, value, { targetMaps: maps });
             }
         });

@@ -1,27 +1,25 @@
 import {EntityParamOptions} from "../options/EntityParamOptions";
-import {defaultMetadataArgsStorage} from "routing-controllers";
 import {entityTransform} from "../util/Utils";
-import {ParamTypes} from "routing-controllers/metadata/types/ParamTypes";
+import {defaultMetadataArgsStorage} from "routing-controllers/metadata-builder/MetadataArgsStorage";
 
 export function EntityFromCookie(paramName: string, options?: EntityParamOptions) {
-    return function(object: Object, methodName: string, index: number) {
+    return function(object: Object, method: string, index: number) {
 
-        const reflectedType = (<any>Reflect).getMetadata("design:paramtypes", object, methodName)[index];
+        const reflectedType = (Reflect as any).getMetadata("design:paramtypes", object, method)[index];
+        const isArray = reflectedType && reflectedType.name ? reflectedType.name.toLowerCase() === "array" : false;
         const target = options && options.type ? options.type : reflectedType;
         if (!target)
             throw new Error("Cannot guess type if the parameter");
 
-        defaultMetadataArgsStorage().params.push({
-            method: methodName,
-            name: paramName,
+        defaultMetadataArgsStorage.params.push({
+            object: object,
+            method: method,
             index: index,
-            type: ParamTypes.COOKIE,
-            reflectedType: reflectedType,
-            parseJson: options && options.parseJson,
-            isRequired: options && options.required,
-            // format: target,
-            target: object.constructor,
-            transform: value => entityTransform(value, target, options)
+            name: paramName,
+            type: "cookie",
+            parse: options && options.parse,
+            required: options && options.required,
+            transform: value => entityTransform(value, target, isArray, options)
         });
     };
 }

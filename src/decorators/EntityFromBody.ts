@@ -2,6 +2,7 @@ import {EntityParamOptions} from "../options/EntityParamOptions";
 import {getConnection} from "typeorm";
 import {plainToClass} from "class-transformer";
 import {defaultMetadataArgsStorage} from "routing-controllers/metadata-builder/MetadataArgsStorage";
+import {ActionProperties} from "routing-controllers/ActionProperties";
 
 /**
  * Creates entity from the request body.
@@ -22,7 +23,7 @@ export function EntityFromBody(options?: EntityParamOptions) {
             type: "body",
             parse: options && options.parse,
             required: options && options.required,
-            transform: (value: any) => {
+            transform: (actionProperties: ActionProperties, value: any) => {
                 const connection = getConnection(options ? options.connection : undefined);
 
                 function buildMap(target: Function, maps: { target: Function, properties: any }[]) {

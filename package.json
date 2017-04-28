@@ -1,6 +1,6 @@
 {
   "name": "typeorm-routing-controllers-extensions",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "TypeORM routing-controllers integration library.",
   "license": "MIT",
   "readmeFilename": "README.md",

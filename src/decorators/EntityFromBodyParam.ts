@@ -20,7 +20,7 @@ export function EntityFromBodyParam(paramName: string, options?: EntityParamOpti
             type: "body-param",
             parse: options && options.parse,
             required: options && options.required,
-            transform: (value: any) => {
+            transform: (actionProperties, value) => {
                 if (value === undefined || value === null) return undefined;
 
                 const connection = getConnectionManager().get(options ? options.connection : undefined);

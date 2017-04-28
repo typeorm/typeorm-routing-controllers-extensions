@@ -19,7 +19,7 @@ export function EntityFromCookie(paramName: string, options?: EntityParamOptions
             type: "cookie",
             parse: options && options.parse,
             required: options && options.required,
-            transform: value => entityTransform(value, target, isArray, options)
+            transform: (actionProperties, value) => entityTransform(value, target, isArray, options)
         });
     };
 }

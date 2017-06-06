@@ -1,6 +1,6 @@
 import {EntityParamOptions} from "../options/EntityParamOptions";
 import {entityTransform} from "../util/Utils";
-import {defaultMetadataArgsStorage} from "routing-controllers/metadata-builder/MetadataArgsStorage";
+import {getMetadataArgsStorage} from "routing-controllers";
 
 export function EntityFromCookie(paramName: string, options?: EntityParamOptions) {
     return function(object: Object, method: string, index: number) {
@@ -11,7 +11,7 @@ export function EntityFromCookie(paramName: string, options?: EntityParamOptions
         if (!target)
             throw new Error("Cannot guess type if the parameter");
 
-        defaultMetadataArgsStorage.params.push({
+        getMetadataArgsStorage().params.push({
             object: object,
             method: method,
             index: index,

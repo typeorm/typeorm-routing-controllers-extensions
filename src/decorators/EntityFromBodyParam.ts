@@ -1,7 +1,7 @@
 import {EntityParamOptions} from "../options/EntityParamOptions";
 import {getConnectionManager} from "typeorm";
 import {plainToClass} from "class-transformer";
-import {defaultMetadataArgsStorage} from "routing-controllers/metadata-builder/MetadataArgsStorage";
+import {getMetadataArgsStorage} from "routing-controllers";
 
 export function EntityFromBodyParam(paramName: string, options?: EntityParamOptions) {
     return function(object: Object, method: string, index: number) {
@@ -12,7 +12,7 @@ export function EntityFromBodyParam(paramName: string, options?: EntityParamOpti
         if (!target)
             throw new Error("Cannot guess type if the parameter");
 
-        defaultMetadataArgsStorage.params.push({
+        getMetadataArgsStorage().params.push({
             object: object,
             method: method,
             index: index,

@@ -1,8 +1,7 @@
 import {EntityParamOptions} from "../options/EntityParamOptions";
 import {getConnection} from "typeorm";
 import {plainToClass} from "class-transformer";
-import {defaultMetadataArgsStorage} from "routing-controllers/metadata-builder/MetadataArgsStorage";
-import {ActionProperties} from "routing-controllers/ActionProperties";
+import {Action, getMetadataArgsStorage} from "routing-controllers";
 
 /**
  * Creates entity from the request body.
@@ -16,14 +15,14 @@ export function EntityFromBody(options?: EntityParamOptions) {
         if (!target)
             throw new Error("Cannot guess type if the parameter");
 
-        defaultMetadataArgsStorage.params.push({
+        getMetadataArgsStorage().params.push({
             object: object,
             method: method,
             index: index,
             type: "body",
             parse: options && options.parse,
             required: options && options.required,
-            transform: (actionProperties: ActionProperties, value: any) => {
+            transform: (action: Action, value: any) => {
                 const connection = getConnection(options ? options.connection : undefined);
 
                 function buildMap(target: Function, maps: { target: Function, properties: any }[]) {

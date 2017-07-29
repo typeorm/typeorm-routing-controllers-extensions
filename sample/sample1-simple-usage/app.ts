@@ -2,6 +2,7 @@ import "reflect-metadata";
 import {createConnection, useContainer} from "typeorm";
 import {Container} from "typedi";
 import {createExpressServer} from "routing-controllers";
+import { PostController } from "./controller/PostController";
 
 useContainer(Container);
 createConnection({
@@ -20,7 +21,9 @@ createConnection({
 }).then(async connection => {
 
     console.log("Connected. Now run express app");
-    createExpressServer().listen(3000);
+    createExpressServer({
+        controllers: [PostController]
+    }).listen(3000);
     console.log("Server is up and running on port 3000. Now send requests to check if everything works.");
 
 }).catch(error => console.log("Error: ", error));

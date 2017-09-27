@@ -1,4 +1,4 @@
-import {JsonController, Get, Post as HttpPost, Patch} from "routing-controllers";
+import {Get, JsonController, Patch, Post as HttpPost} from "routing-controllers";
 import {getConnectionManager, Repository} from "typeorm";
 import {Post} from "../entity/Post";
 import {EntityFromParam} from "../../../src/decorators/EntityFromParam";
@@ -21,12 +21,12 @@ export class PostController {
 
     @HttpPost("/posts")
     save(@EntityFromBody() post: Post) {
-        return this.postRepository.persist(post);
+        return this.postRepository.save(post);
     }
 
     @Patch("/posts")
     patch(@EntityFromBodyParam("post1") post1: Post, @EntityFromBodyParam("post2") post2: Post) {
-        return this.postRepository.persist([post1, post2]);
+        return this.postRepository.save([post1, post2]);
     }
 
 }

@@ -2,22 +2,19 @@ import "reflect-metadata";
 import {createConnection, useContainer} from "typeorm";
 import {Container} from "typedi";
 import {createExpressServer} from "routing-controllers";
-import { PostController } from "./controller/PostController";
+import {PostController} from "./controller/PostController";
 
 useContainer(Container);
 createConnection({
-    driver: {
-        type: "postgres",
-        host: "localhost",
-        port: 5432,
-        username: "test",
-        password: "admin",
-        database: "test"
-    },
-    entities: [
-        __dirname + "/entity/*.js"
-    ],
-    autoSchemaSync: true
+    type: "mysql",
+    host: "localhost",
+    port: 3306,
+    username: "test",
+    password: "test",
+    database: "test",
+    entities: [__dirname + "/entity/*.js"],
+    synchronize: true,
+    logging: true
 }).then(async connection => {
 
     console.log("Connected. Now run express app");

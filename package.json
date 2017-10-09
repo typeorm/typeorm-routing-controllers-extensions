@@ -43,11 +43,11 @@
     "tslint": "^5.7.0",
     "tslint-stylish": "^2.1.0",
     "typedi": "^0.5.2",
-    "typeorm": "0.1.0-alpha.50",
+    "typeorm": "^0.1.0",
     "typescript": "^2.5.3"
   },
   "peerDependencies": {
-    "typeorm": ">=0.1.0-alpha.50 <0.2.0",
+    "typeorm": "^0.1.0",
     "class-transformer": "^0.1.7",
     "routing-controllers": "^0.7.3"
   }

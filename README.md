@@ -135,30 +135,25 @@ export class UserController {
 
 Each decorator accepts `EntityParamOptions` which has following options:
 
-* `connectionName?: string` 
+* `connection?: string`
 
 Name of the connection to be used in TypeORM. By default, its "default" connection.
 
-* `required: boolean` 
+* `required: boolean`
 
 Indicate if this parameter's value is required.
 If its required and client didn't pass a value, routing-controllers will throw an error.
 
-* `parseJson: boolean` 
+* `parse: boolean`
 
 Specifies "parseJson" option to routing-controllers.
 
-* `type: Function` 
+* `type: Function`
 
 Entity type. Automatically retrieved from entity param's type, but in some cases,
 for example if you are using array of entities it should be passed explicitly.
 
-* `many: boolean` 
-
-Entity type. Automatically retrieved from entity param's type, but in some cases,
-for example if you are using array of entities it should be passed explicitly.
-
-* `property: boolean` 
+* `property: boolean`
 
 Property to find by. If not specified, then entity will be fetched by its primary keys.
 

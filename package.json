@@ -1,6 +1,6 @@
 {
   "name": "typeorm-routing-controllers-extensions",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeORM routing-controllers integration library.",
   "license": "MIT",
   "readmeFilename": "README.md",
@@ -36,19 +36,18 @@
     "gulp-shell": "^0.6.3",
     "gulp-tslint": "^8.1.2",
     "gulpclass": "^0.1.2",
-    "mysql": "^2.14.1",
-    "reflect-metadata": "^0.1.10",
-    "routing-controllers": "^0.7.3",
-    "ts-node": "^3.3.0",
+    "mysql": "^2.15.0",
+    "routing-controllers": "^0.7.7",
+    "ts-node": "^6.0.0",
     "tslint": "^5.7.0",
     "tslint-stylish": "^2.1.0",
-    "typedi": "^0.5.2",
-    "typeorm": "^0.1.0",
-    "typescript": "^2.5.3"
+    "typedi": "^0.7.2",
+    "typeorm": "^0.2.0",
+    "typescript": "^2.8.1"
   },
   "peerDependencies": {
-    "typeorm": "^0.1.0",
+    "typeorm": "^0.2.0",
     "class-transformer": "^0.1.7",
-    "routing-controllers": "^0.7.3"
+    "routing-controllers": "^0.7.7"
   }
 }

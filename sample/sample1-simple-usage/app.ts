@@ -1,8 +1,8 @@
-import "reflect-metadata";
 import {createConnection, useContainer} from "typeorm";
 import {Container} from "typedi";
 import {createExpressServer} from "routing-controllers";
 import {PostController} from "./controller/PostController";
+import {Post} from "./entity/Post";
 
 useContainer(Container);
 createConnection({
@@ -12,7 +12,7 @@ createConnection({
     username: "test",
     password: "test",
     database: "test",
-    entities: [__dirname + "/entity/*.js"],
+    entities: [Post],
     synchronize: true,
     logging: true
 }).then(async connection => {

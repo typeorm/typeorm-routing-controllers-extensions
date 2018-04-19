@@ -5,6 +5,9 @@ import {getConnectionManager} from "typeorm";
  * @internal
  */
 export function entityTransform(value: any, target: any, isArray: boolean, options?: EntityParamOptions) {
+    if (value === null || value === undefined)
+        return Promise.resolve(value);
+
     const connection = getConnectionManager().get(options ? options.connection : undefined);
     const repository = connection.getRepository(target);
     if (options) {
@@ -18,5 +21,5 @@ export function entityTransform(value: any, target: any, isArray: boolean, optio
             return repository.findOne({ [options.property]: value });
         }
     }
-    return repository.findOneById(value);
+    return repository.findOne(value);
 }
